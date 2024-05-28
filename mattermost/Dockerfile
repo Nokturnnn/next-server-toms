@@ -4,7 +4,7 @@ FROM mattermost/mattermost-team-edition:latest
 # Set the working directory
 WORKDIR /mattermost
 
-# Expose the default port
+# Expose the default ports
 EXPOSE 8065
 
 # Copy configuration files if needed
