@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  mattermost:
+    build: .
+    ports:
+      - "8065:8065"
+    environment:
+      - MM_USERNAME=admin
+      - MM_PASSWORD=admin
+      - MM_DBNAME=mattermost
+      - MM_SQLSETTINGS_DRIVERNAME=postgres
+      - MM_SQLSETTINGS_DATASOURCE=postgres://gace_lhotellier:gace_lhotellier@35.239.186.51:5432/mattermost?sslmode=disable&connect_timeout=10
+
+  db:
+    image: postgres:12
+    environment:
+      - POSTGRES_USER=gace_lhotellier
+      - POSTGRES_PASSWORD=gace_lhotellier
+      - POSTGRES_DB=mattermost
+    volumes:
+      - mattermost-db-data:/var/lib/postgresql/data
+
+volumes:
+  mattermost-db-data:
