@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:13
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bookstack
+      POSTGRES_USER: bookstackuser
+      POSTGRES_PASSWORD: bookstackpass
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      DB_HOST: db:5432
+      DB_DATABASE: bookstack
+      DB_USERNAME: bookstackuser
+      DB_PASSWORD: bookstackpass
+      APP_URL: http://localhost:8080
+    volumes:
+      - bookstack-data:/config
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+  bookstack-data:
